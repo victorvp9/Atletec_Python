@@ -123,7 +123,20 @@ def atualizar_heatmap():
     points = np.array([x_coords, y_coords]).T
 
     if len(points) == 0:
-        print("No points to plot.")
+        ax.imshow(campo_img, extent=[xmin, xmax, ymin, ymax], origin='lower', aspect='auto')
+        ax.plot()
+        ax.set_xlim([xmin, xmax])
+        ax.set_ylim([ymin, ymax])
+        ax.set_xticks([])
+        ax.set_yticks([])
+        # ax.set_xlabel('Longitude')
+        # ax.set_ylabel('Latitude')
+        # ax.set_title('Mapa de Calor do Jogador sobre o Campo de Futebol')
+        ax.set_aspect('equal')
+        fig.patch.set_alpha(0)
+        # plt.plot()
+        fig.canvas.draw()
+        plt.savefig("C:/Users/victo/Documents/Projetos/Atletec/Atletec/lib/images/heatmap.png")
         return
     
     heatmap, xedges, yedges = np.histogram2d(points[:, 0], points[:, 1], bins=60, range=[[xmin, xmax], [ymin, ymax]])
@@ -236,16 +249,18 @@ def execute_function():
 @app.route('/atualizar_coordenadas', methods = ['POST'])
 def atualizar_coordenadas():
     global coordenadas
-
+    x_coords.clear()
+    y_coords.clear()
+    atualizar_heatmap()
     data = request.get_json()
-    
+
     novas_coordenadas_str = data.get('coordenadas')
     print("\n Novas coordenadas = ", novas_coordenadas_str, "\n")
     coordenadas_lista = list(map(float, novas_coordenadas_str.split(', ')))
     novas_coordenadas = [(coordenadas_lista[i], coordenadas_lista[i+1]) for i in range(0, len(coordenadas_lista), 2)]
     print("\n",novas_coordenadas)
     coordenadas = novas_coordenadas
-
+    
     calculate_lados(coordenadas)
 
     return jsonify({'status': 'Coordenadas Atualizadas com sucesso', 'coordenadas': coordenadas})

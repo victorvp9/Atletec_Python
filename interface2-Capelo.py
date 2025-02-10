@@ -136,7 +136,7 @@ def atualizar_heatmap():
         fig.patch.set_alpha(0)
         # plt.plot()
         fig.canvas.draw()
-        plt.savefig("C:/Users/victo/Documents/Projetos/Atletec/Atletec/lib/images/heatmap.png")
+        plt.savefig("C:/Users/rafae/Documents/Atletec/Front/Atletec/lib/images/heatmap.png")
         return
     
     heatmap, xedges, yedges = np.histogram2d(points[:, 0], points[:, 1], bins=60, range=[[xmin, xmax], [ymin, ymax]])
@@ -162,7 +162,7 @@ def atualizar_heatmap():
     # plt.plot()
     fig.canvas.draw()  # Redesenha a figura
     try:
-        plt.savefig("C:/Users/victo/Documents/Projetos/Atletec/Atletec/lib/images/heatmap.png")
+        plt.savefig("C:/Users/rafae/Documents/Atletec/Front/Atletec/lib/images/heatmap.png")
         print("Heatmap atualizado com sucesso!")
     except Exception as e:
         print(f"Erro ao salvar heatmap: {e}")
